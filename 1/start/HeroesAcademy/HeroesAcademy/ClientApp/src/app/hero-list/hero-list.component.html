@@ -1,0 +1,79 @@
+<div class="alert alert-success" *ngIf="showAlert">
+  <strong>{{ alertText }}</strong>
+</div>
+<div class="card">
+  <h5 class="card-header">Lista Herosów</h5>
+  <div class="card-body">
+    <div class="row">
+      <label class="col-md-2 col-form-label" for="filterHeroes">Filtruj:</label>
+      <div class="col-md-4">
+        <input
+          class="form-control"
+          id="filterHeroes"
+          type="text"
+          [(ngModel)]="listFilter"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 left">
+        <h4>Filtrowanie po: {{ listFilter }}</h4>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table" *ngIf="heroes && heroes.length">
+        <thead>
+          <tr>
+            <th>
+              <button
+                class="btn"
+                type="button"
+                [ngClass]="showLogo ? 'btn-success' : 'btn-danger'"
+                (click)="toggleLogo()"
+              >
+                {{ showLogo ? "Ukryj" : "Pokaż" }} logo
+              </button>
+            </th>
+            <th>Nazwa</th>
+            <th>Team</th>
+            <th>Tożsamość</th>
+            <th>Wynagrodzenie</th>
+            <th>Siła</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hero of filteredHeroes">
+            <td>
+              <img class="logo" *ngIf="showLogo" [src]="hero.logoUrl" alt="Hero logo"/>
+            </td>
+            <td>
+              <a [routerLink]="['/heroes', hero.id]">{{ hero.name }}</a>
+            </td>
+            <td>{{ hero.team }}</td>
+            <td>{{ hero.secretIdentity | secret : "*" }}</td>
+            <!-- <td>{{ hero.salary | currency: "USD":"symbol":"1.2-2" }}</td> -->
+            <td>{{ hero.salary | number : "1.2-2" }} zł</td>
+            <td>
+              <app-fist
+                [rating]="hero.strength"
+                (fistRatingClicked)="onRatingClick($event)"
+              ></app-fist>
+            </td>
+            <td>
+              <span
+                class="fas fa-times action"
+                (click)="deleteHero(hero)"
+              ></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-success" [routerLink]="['/heroesEdit']">
+      Dodaj herosa
+    </button>
+  </div>
+</div>

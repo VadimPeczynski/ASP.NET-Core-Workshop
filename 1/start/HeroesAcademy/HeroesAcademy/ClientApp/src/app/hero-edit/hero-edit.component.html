@@ -1,0 +1,109 @@
+<div class="card">
+  <h5 class="card-header">
+    {{ pageTitle }}
+  </h5>
+  <div class="card-body container">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+      <div class="form-group">
+        <label for="name">Nazwa</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Nazwa bohatera"
+          [(ngModel)]="hero.name"
+          #nameField="ngModel"
+          required
+          minlength="3"
+          (blur)="onNameBlur(nameField)"
+        />
+        <div
+          class="alert alert-danger"
+          [hidden]="nameField.valid || nameField.untouched"
+        >
+          Wprowadź imię
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="team">Team</label>
+        <select
+          class="form-control"
+          id="team"
+          name="team"
+          [(ngModel)]="hero.team"
+        >
+          <option value="null" selected disabled hidden>Wybierz</option>
+          <option *ngFor="let team of teams$ | async">{{ team }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="secretIdentity"
+          >Tożsamość
+          <span
+            class="fas fa-info-circle ml-2"
+            (click)="onIconClick()"
+            [ngStyle]="{ color: isPasswordVisible ? 'red' : 'green' }"
+          ></span>
+        </label>
+        <input
+          [type]="secretIdentityType"
+          class="form-control"
+          id="secretIdentity"
+          name="secretIdentity"
+          [(ngModel)]="hero.secretIdentity"
+        />
+      </div>
+      <div class="form-group">
+        <label for="salary">Wynagrodzenie</label>
+        <input
+          type="number"
+          class="form-control"
+          id="salary"
+          name="salary"
+          [(ngModel)]="hero.salary"
+        />
+      </div>
+      <div class="form-group">
+        <label for="strength">Siła</label>
+        <input
+          type="number"
+          class="form-control"
+          id="strength"
+          name="strength"
+          [(ngModel)]="hero.strength"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Opis</label>
+        <textarea
+          class="form-control"
+          id="description"
+          rows="3"
+          name="description"
+          [(ngModel)]="hero.description"
+        ></textarea>
+      </div>
+      <div class="form-group form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="active"
+          name="active"
+          [(ngModel)]="hero.active"
+        />
+        <label class="form-check-label" for="active">Aktywny</label>
+      </div>
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary me-2">Dodaj</button>
+        <button
+          type="button"
+          class="btn btn-secondary ml-2"
+          (click)="onCancelClick()"
+        >
+          Anuluj
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

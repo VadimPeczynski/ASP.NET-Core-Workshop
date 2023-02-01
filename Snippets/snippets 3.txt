@@ -1,0 +1,183 @@
+1. Plik json
+
+private heroesApi: string = '../../api/heroes.json';
+
+2. Pobieranie danych
+
+this.http.get<Hero[]>(this.heroesApi).pipe(
+      tap((data) => console.log('All: ' + JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+
+3. Import operatorów
+
+import { tap, catchError } from 'rxjs/operators';
+
+4. Obsługa błedów
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage: string;
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      errorMessage = `An error occurred: ${error.error.message}`;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      errorMessage =
+        `Backend returned code ${error.status}, ` +
+        `status text was: ${error.statusText}`;
+    }
+    console.error(error);
+    return throwError(errorMessage);
+  }
+
+5. ngcc
+
+"postinstall": "ngcc"
+
+6. Instalacja WebAPI in Memory
+
+npm i angular-in-memory-web-api --save
+
+7. Inicjalizacja modułu
+
+HttpClientInMemoryWebApiModule.forRoot(HeroData, {
+      dataEncapsulation: false,
+    }),
+
+8. Tworzenie serwisu InMemory
+
+export class HeroData implements InMemoryDbService {
+  createDb() {
+    const heroes: Hero[] = [
+    ];
+    return { heroes };
+  }
+}
+
+9. Pobieranie danych z WebAPI
+
+private heroesUrl = 'api/heroes';
+
+10. HTTP Delete
+
+deleteHero(id: number): Observable<{}> {
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.delete(url).pipe(catchError(this.handleError));
+  }
+
+11. Usuwanie bohatera:
+
+if (hero && hero.id) {
+      if (confirm(`Czy chcesz usunąć bohatera: ${hero.name}?`)) {
+        this.heroService.deleteHero(hero.id).subscribe(() => {
+          const foundIndex = this.heroes.findIndex(
+            (item) => item.id === hero.id
+          );
+          if (foundIndex > -1) {
+            this.heroes.splice(foundIndex, 1);
+          }
+          this.filteredHeroes = this.heroes;
+        });
+      }
+    }
+
+12. Request headers
+
+const headerReq = request.clone({
+      headers: request.headers
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'my-auth-token'),
+    });
+
+13. Router 
+
+RouterModule.forRoot([
+      { path: 'heroes', component: HeroListComponent },
+      { path: 'home', component: HomeComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '**', redirectTo: 'home', pathMatch: 'full' },
+    ])
+14. Router link
+
+ routerLinkActive="active" [routerLink]="['/heroes']"
+
+15. Route z parametrem
+
+      { path: 'heroes/:id', component: HeroDetailComponent },
+
+16. Router link z parametrem
+
+<a [routerLink]="['/heroes', hero.id]">{{ hero.name }}</a>
+
+17. Hero detail template
+
+<div class="card">
+  <div class="card-header">{{ pageTitle }}</div>
+  <div class="card-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="onClick()">
+      <i class="fa fa-chevron-left"></i> Powrót
+    </button>
+  </div>
+</div>
+
+17. Guard
+
+const id = +route.url[1].path;
+    if (isNaN(id) || id < 1) {
+      alert("Nieprawidłowy id");
+      this.router.navigate(['/heroes']);
+    }
+
+18. Homework
+
+<div class='card border-primary' *ngIf="hero">
+  <div class='card-header'>
+      {{pageTitle + ': ' + hero.name}}
+  </div>
+
+  <div class='card-body'>
+    <div class='row'>
+        <div class='col-md-6'>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Nazwa:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Team:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Tożsamość:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+	    <div class="row">
+          	<div class="col-md-3 text-left">Opis:</div>
+          	<div class="col-md-6 text-left"></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Wynagrodzenie:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+            <div class='row'>
+                <div class='col-md-3 text-left'>Siła:</div>
+                <div class='col-md-6 text-left'></div>
+            </div>
+        </div>
+
+        <div class='col-md-6'>
+            <img class='center-block img-responsive' 
+                 [style.width.px]='200' 
+                 [style.margin.px]='2' 
+                 [src]=''
+                 [title]='hero.name'>
+        </div>
+    </div>
+</div>
+
+<div class='card-footer'>
+    <a class='btn btn-default' (click)='onClick()' style='width:80px'>
+        <i class='fas fa-chevron-left'></i> Wstecz
+    </a>
+</div>
+</div>

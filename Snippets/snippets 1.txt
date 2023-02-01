@@ -1,0 +1,59 @@
+1. Instalacja bootstrap:
+
+npm install bootstrap @fortawesome/fontawesome-free
+
+Do angular.json:
+"./node_modules/bootstrap/scss/bootstrap.scss",
+"./node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+"./node_modules/@fortawesome/fontawesome-free/scss/solid.scss"
+
+2. Utworzenie carda:
+
+<div class="card">
+  <div class="card-header">Heroes List</div>
+</div>
+
+3. Card-body:
+<div class="card-body">
+    <div class="row">
+      <div class="col-md-2 left">Filtruj:</div>
+      <div class="col-md-4">
+        <input type="text" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 left">
+        <h4>Filtrowanie po:</h4>
+      </div>
+    </div>
+  </div>
+
+4. Table:
+<div class='table-responsive'>
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Team</th>
+                    <th>Tożsamość</th>
+		    <th>Wynagrodzenie</th>
+                    <th>Siła</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+5. Row:
+<tr>
+                <td>
+                    {{hero.name}}
+                </td>
+                <td>{{hero.team}}</td>
+                <td>{{hero.secretIdentity}}</td>
+                <td>{{hero.salary}}</td>
+                <td>
+                    {{hero.strength}}
+                </td>
+            </tr>

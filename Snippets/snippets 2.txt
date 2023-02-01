@@ -1,0 +1,70 @@
+1. Przycisk i image:
+
+<button class="btn btn-danger" type="button">Pokaż logo</button>
+<img [src]="hero.logoUrl" [style.width.px]="" [style.margin.px]=""/>
+
+2. SCSS:
+.logo {
+  width: 50px;
+  margin: 3px;
+}
+
+3. Currency pipe:
+<td>{{ hero.salary | currency: "USD":"symbol":"1.2-2" }}</td>
+
+import localePL from '@angular/common/locales/pl';
+
+registerLocaleData(localePL);
+
+providers: [{ provide: LOCALE_ID, useValue: 'pl' }],
+
+4. Custom pipe:
+let result = '';
+    for (let index = 0; index < value.length; index++) {
+      result += character;
+    }
+    return result;
+
+5.Intefejs
+export interface Hero {
+  id: number;
+  name: string;
+  team: string;
+  secretIdentity: string;
+  salary: number;
+  description: string;
+  strength: number;
+  logoUrl: string;
+}
+
+6. Strength:
+<div class='crop'>
+  <div style="width: 60px">
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
+    <span class="fas fa-fist-raised"></span>
+  </div>
+</div>
+
+7. Fist SCSS:
+.crop {
+  overflow: hidden;
+}
+div {
+  cursor: pointer;
+}
+
+8. Alert
+<div class="alert alert-success" *ngIf="showAlert">
+  <strong>{{ alertText }}</strong>
+</div>
+
+9. Filtrowanie
+filterHeroes(filterBy: string): Hero[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.heroes.filter((hero: Hero) => {
+      return hero.name.toLocaleLowerCase().indexOf(filterBy) !== -1;
+    });
+  }

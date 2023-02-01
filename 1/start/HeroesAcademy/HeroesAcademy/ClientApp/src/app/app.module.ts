@@ -1,55 +1,28 @@
-import { HttpClientModule } from '@angular/common/http';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroDetailGuard } from './hero-detail/hero-detail.guard';
-import { HeroEditComponent } from './hero-edit/hero-edit.component';
-import { HeroDataService } from './hero-list/hero-data.service';
-import { HeroListComponent } from './hero-list/hero-list.component';
-import { SecretPipe } from './hero-list/secret.pipe';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { httpInterceptorProviders } from './interceptors';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { FistComponent } from './shared/fist/fist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FistComponent,
-    HeroListComponent,
+    NavMenuComponent,
     HomeComponent,
-    NavBarComponent,
-    SecretPipe,
-    HeroDetailComponent,
-    HeroEditComponent,
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(HeroDataService, {
-      dataEncapsulation: false,
-    }),
+    FormsModule,
     RouterModule.forRoot([
-      { path: 'heroesEdit/:id', component: HeroEditComponent },
-      { path: 'heroesEdit', component: HeroEditComponent },
-      { path: 'heroes', component: HeroListComponent },
-      {
-        path: 'heroes/:id',
-        component: HeroDetailComponent,
-        canActivate: [HeroDetailGuard],
-      },
-      { path: 'home', component: HomeComponent },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: '**', redirectTo: 'home', pathMatch: 'full' },
-    ]),
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+    ])
   ],
-  providers: [httpInterceptorProviders],
-  bootstrap: [AppComponent],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

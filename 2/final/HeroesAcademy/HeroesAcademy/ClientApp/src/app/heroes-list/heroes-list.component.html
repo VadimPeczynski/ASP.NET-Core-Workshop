@@ -1,0 +1,76 @@
+<div class="card">
+  <div class="card-header">Heroes List</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-2 left">Filtruj:</div>
+      <div class="col-md-4">
+        <input type="text" [(ngModel)]="listFilter" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 left">
+        <h4>Filtrowanie po:</h4>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <button
+                class="btn"
+                type="button"
+                (click)="onClick()"
+                [ngClass]="showImage ? 'btn-success' : 'btn-danger'"
+              >
+                {{ showImage ? "Ukryj" : "Pokaż" }} logo
+              </button>
+            </th>
+            <th>Nazwa</th>
+            <th>Team</th>
+            <th>Tożsamość</th>
+            <th>Wynagrodzenie</th>
+            <th>Siła</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let hero of filteredHeroes">
+            <td>
+              <img
+                *ngIf="showImage"
+                [src]="hero.logoUrl"
+                [style.width.px]="50"
+                [style.margin.px]="3"
+                [alt]="hero.logoUrl"
+              />
+            </td>
+            <td>
+              <a [routerLink]="['/heroes', hero.id]">{{ hero.name }}</a>
+            </td>
+            <td>{{ hero.team }}</td>
+            <td>{{ hero.secretIdentity | secret : "*" }}</td>
+            <td>{{ hero.salary | currency : "USD" : "symbol" : "1.2-2" }}</td>
+            <td>
+              <app-fist
+                [strength]="hero.strength"
+                (notify)="onNotify($event)"
+              ></app-fist>
+            </td>
+            <td>
+              <span
+                class="fas fa-times delete"
+                (click)="deleteHero(hero)"
+              ></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-success" [routerLink]="['/heroEdit']">
+      Dodaj herosa
+    </button>
+  </div>
+</div>

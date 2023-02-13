@@ -1,0 +1,66 @@
+<div class="card border-primary" *ngIf="hero">
+  <div class="card-header">
+    {{ pageTitle + ": " + hero.name }}
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-3 text-left">Nazwa:</div>
+          <div class="col-md-6 text-left">{{ hero.name }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Team:</div>
+          <div class="col-md-6 text-left">{{ hero.team }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Tożsamość:</div>
+          <div class="col-md-6 text-left">{{ hero.secretIdentity }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Opis:</div>
+          <div class="col-md-6 text-left">{{ hero.description }}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Wynagrodzenie:</div>
+          <div class="col-md-6 text-left">
+            {{ hero.salary | currency : "USD" : "symbol" : "1.2-2" }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-left">Siła:</div>
+          <div class="col-md-6 text-left">
+            <app-fist [strength]="hero.strength"></app-fist>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <img
+          class="center-block img-responsive"
+          [style.width.px]="200"
+          [style.margin.px]="2"
+          [src]="hero.logoUrl"
+          [title]="hero.name"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button
+      class="btn btn-outline-secondary"
+      (click)="onClick()"
+    >
+      <i class="fas fa-chevron-left"></i> Wstecz
+    </button>
+    <button
+      type="button"
+      class="btn btn-success ms-1"
+      [routerLink]="['/heroEdit', hero.id]"
+    >
+      Edycja bohatera
+    </button>
+  </div>
+</div>
